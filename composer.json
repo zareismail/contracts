@@ -1,0 +1,32 @@
+{
+    "name": "zareismail/contracts",
+    "description": "A Laravel Nova tool.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "armincms/option": "~0.1",
+        "anetwork/validation": "~2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zareismail\\Contracts\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zareismail\\Contracts\\Providers\\BlueprintServiceProvider",
+                "Zareismail\\Contracts\\Providers\\ConfigurationServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
