@@ -8,6 +8,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1.0",
+        "laravel/scout": "~8.3",
         "armincms/option": "~0.1",
         "anetwork/validation": "~2.1"
     },
