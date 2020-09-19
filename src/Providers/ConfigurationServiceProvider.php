@@ -14,6 +14,7 @@ class ConfigurationServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app['config']->set('logging.default', 'daily');
+        $this->app['config']->set('scout.driver', null);
 
         $this->mergeConfigFrom(__DIR__.'/../../config/option.php', 'option');
 
