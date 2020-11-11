@@ -2,11 +2,10 @@
 
 namespace Zareismail\Contracts\Providers;
  
-use Illuminate\Support\ServiceProvider; 
-use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;  
 use Illuminate\Database\Schema\Blueprint;
 
-class BlueprintServiceProvider extends ServiceProvider implements DeferrableProvider
+class BlueprintServiceProvider extends ServiceProvider
 {  
     /**
      * Register any application services.
@@ -27,7 +26,7 @@ class BlueprintServiceProvider extends ServiceProvider implements DeferrableProv
 
         // The resource details.
         Blueprint::macro('detail', function() {
-            $this->json("detail")->default('[]');
+            $this->json("detail")->nullable();
         });
 
         Blueprint::macro('dropDetail', function() { 
@@ -36,7 +35,7 @@ class BlueprintServiceProvider extends ServiceProvider implements DeferrableProv
 
         // The resource configurations.
         Blueprint::macro('config', function() {
-            $this->json("config")->default('[]');
+            $this->json("config")->nullable();
         });
 
         Blueprint::macro('dropConfig', function() { 
@@ -84,7 +83,7 @@ class BlueprintServiceProvider extends ServiceProvider implements DeferrableProv
         });
 
         // Price blueprint
-        Blueprint::macro('price', function($name = 'price', $total = 10, $places = 2) {
+        Blueprint::macro('price', function($name = 'price', $total = 12, $places = 2) {
             return $this->double($name, $total, $places)->default(0.00); 
         });
 
@@ -94,7 +93,7 @@ class BlueprintServiceProvider extends ServiceProvider implements DeferrableProv
 
          // small price blueprint
         Blueprint::macro('smallPrice', function($name = 'price') {
-            return $this->price($name, 8, 2); 
+            return $this->price($name, 10, 2); 
         });
 
         Blueprint::macro('dropSmallPrice', function($name = 'price') {
@@ -122,27 +121,11 @@ class BlueprintServiceProvider extends ServiceProvider implements DeferrableProv
 
         // SEO blueprint 
         Blueprint::macro('seo', function() {
-            return $this->json('seo')->default(json_encode([
-                'description' => null,
-                'keywords'  => null,
-                'robots'    => 'index,follow',
-                'title'     => null,
-            ]));
+            return $this->json('seo')->nullable();
         });
 
         Blueprint::macro('dropSeo', function() {
             $this->dropColumn('seo');
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides() {
-        return [
-            'migrator'
-        ];
-    }
+    } 
 }
