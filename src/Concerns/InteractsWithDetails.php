@@ -9,7 +9,7 @@ trait InteractsWithDetails
      * 
      * @return void
      */
-    public function initializeInteractsWithConfigs() 
+    public function initializeInteractsWithDetails() 
     {
         $this->casts['details'] = 'array';
     }
@@ -21,7 +21,7 @@ trait InteractsWithDetails
      * @param  mixed $default 
      * @return mixed          
      */
-    public function details(string $key, $default = null)
+    public function getDtails(string $key, $default = null)
     {
         return data_get($this->details, $key, $default);
     }

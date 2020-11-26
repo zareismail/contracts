@@ -35,7 +35,7 @@ class BlueprintServiceProvider extends ServiceProvider
 
         // The resource details.
         Blueprint::macro('details', function() {
-            $this->json("details")->nullable();
+            $this->json('details')->nullable();
         });
 
         Blueprint::macro('dropDetails', function() { 
@@ -44,7 +44,7 @@ class BlueprintServiceProvider extends ServiceProvider
 
         // The resource configurations.
         Blueprint::macro('config', function() {
-            $this->json("config")->nullable();
+            $this->json('config')->nullable();
         });
 
         Blueprint::macro('dropConfig', function() { 

@@ -21,7 +21,7 @@ trait InteractsWithConfigs
      * @param  mixed $default 
      * @return mixed          
      */
-    public function config(string $key, $default = null)
+    public function getConfig(string $key, $default = null)
     {
         return data_get($this->config, $key, $default);
     }
