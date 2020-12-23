@@ -2,6 +2,7 @@
 
 namespace Zareismail\Contracts\Providers;
  
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;  
 
 class ConfigurationServiceProvider extends ServiceProvider 
@@ -19,6 +20,12 @@ class ConfigurationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/option.php', 'option');
 
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+        Broadcast::routes(); 
+        
+        Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+            return (int) $user->id === (int) $id;
+        });
     }
 
     /**
