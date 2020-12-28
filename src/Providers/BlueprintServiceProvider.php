@@ -16,11 +16,13 @@ class BlueprintServiceProvider extends ServiceProvider
     {
         // The user authentication.
         Blueprint::macro('auth', function($auth = 'auth') {
-            $this->foreignId("{$auth}_id")->constrained('users'); 
+            return tap($this->foreignId("{$auth}_id"), function($column) {
+                $column->constrained('users');
+            }); 
         });
 
         Blueprint::macro('dropAuth', function($auth = 'auth') {
-            $this->dropForeign("{$auth}_id");
+            $this->dropForeign("{$this->table}_{$auth}_id_foreign");
             $this->dropColumn("{$auth}_id"); 
         }); 
 
