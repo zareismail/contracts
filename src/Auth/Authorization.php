@@ -51,8 +51,8 @@ trait Authorization
     public function scopeAuthenticate($query, Authenticatable $user = null)
     { 
     	return $query
-				->where($query->getQualifiedAuthIdColumn(), optional($user ?? request()->user())->getKey())
-				->orWhereNull($query->getQualifiedAuthIdColumn());
+				->where($this->getQualifiedAuthIdColumn(), optional($user ?? request()->user())->getKey())
+				->orWhereNull($this->getQualifiedAuthIdColumn());
     } 
 
     /**
