@@ -7,22 +7,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Zareismail\Contracts\User;
 
 trait Authorization
-{ 
-
+{   
 	public static function bootAuthorization()
 	{
 		static::saving(function($model) {
-			if($model->isClean('auth_id')) {
+			if(is_null($model->{$model->getAuthIdColumn()}) && request()->user()) {
 				$model->auth()->associate(request()->user());
 			} 
 		});
 
 		static::saved(function($model) {
-			$model->relationLoaded('auth') || $model->load('auth');
- 
+			$relation = $model->getAuthRelation();
 
-			if(! ($model->auth instanceof Authenticatable)) {
-				$model->auth()->associate(request()->user());
+			$model->relationLoaded($relation) || $model->load($relation);
+
+			if(! $model->{$relation} instanceof Authenticatable) {
+				$model->$relation()->associate(request()->user());
 				$model->save();
 			}
 		});
@@ -51,7 +51,37 @@ trait Authorization
     public function scopeAuthenticate($query, Authenticatable $user = null)
     { 
     	return $query
-				->where($query->qualifyColumn('auth_id'), optional($user ?? request()->user())->getKey())
-				->orWhereNull($query->qualifyColumn('auth_id'));
+				->where($query->getQualifiedAuthIdColumn(), optional($user ?? request()->user())->getKey())
+				->orWhereNull($query->getQualifiedAuthIdColumn());
+    } 
+
+    /**
+     * Get the name of the "auth id" column.
+     *
+     * @return string
+     */
+    public function getAuthRelation()
+    {
+        return defined('static::AUTH_RELATION') ? static::AUTH_RELATION : 'auth';
+    } 
+
+    /**
+     * Get the name of the "auth id" column.
+     *
+     * @return string
+     */
+    public function getAuthIdColumn()
+    {
+        return defined('static::AUTH_ID') ? static::AUTH_ID : 'auth_id';
+    } 
+
+    /**
+     * Get the fully qualified "auth id" column.
+     *
+     * @return string
+     */
+    public function getQualifiedAuthIdColumn()
+    {
+        return $this->qualifyColumn($this->getAuthIdColumn());
     }
 }
