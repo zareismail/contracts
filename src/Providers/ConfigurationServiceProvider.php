@@ -16,6 +16,7 @@ class ConfigurationServiceProvider extends ServiceProvider
     {
         $this->app['config']->set('logging.default', 'daily');
         $this->app['config']->set('scout.driver', null);
+        $this->app['config']->set('medialibrary.path_generator', \Zareismail\Contracts\BasePathGenerator::class);
 
         $this->mergeConfigFrom(__DIR__.'/../../config/option.php', 'option');
 
