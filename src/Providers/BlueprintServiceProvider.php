@@ -138,5 +138,14 @@ class BlueprintServiceProvider extends ServiceProvider
         Blueprint::macro('dropSeo', function() {
             $this->dropColumn('seo');
         });
+
+        // SEO blueprint 
+        Blueprint::macro('uniqueness', function() {
+            return $this->string('uniqueness_id', 20)->unique();
+        });
+
+        Blueprint::macro('dropUniqueness', function() {
+            $this->dropColumn('uniqueness_id');
+        });
     } 
 }
